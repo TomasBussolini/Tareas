@@ -1,4 +1,4 @@
-package com.bussolini.tareas;
+package com.bussolini.tareas.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import androidx.fragment.app.Fragment;
 
 import static android.widget.CompoundButton.*;
+
+import com.bussolini.tareas.R;
+
+import java.util.List;
 
 import model.Tarea;
 
@@ -59,6 +62,10 @@ public class TareaFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
+
+                List<Tarea> tareas = TareaLab.getTareas();
+                tareas.add(tarea);
+
                 Intent intent = new Intent(getActivity(), TareaActivity.class);
                 startActivity(intent);
             }

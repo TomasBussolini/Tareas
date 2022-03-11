@@ -2,8 +2,13 @@
     <string name="app_name">Tareas</string>
 
     <string name="title">Título</string>
-    <string name="title_hint">Introduce el título de la tarea.</string>
+    <string name="title_hint">Introduce el título de la tarea</string>
     <string name="done">Realizada</string>
+    <string name="create">Crear Tarea</string>
     <string name="create2">CREAR</string>
+    <string name="instrucciones">Pulse sobre una tarea para marcarla como realizada o para volverla a pendiente.</string>
+
+    <string name="realizada">REALIZADA</string>
+    <string name="pendiente">PENDIENTE</string>
 
 </resources>

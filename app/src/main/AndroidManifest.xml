@@ -11,7 +11,7 @@
         android:theme="@style/Theme.Tareas">
 
         <activity
-            android:name=".TareaActivity"
+            android:name=".controller.TareaActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
