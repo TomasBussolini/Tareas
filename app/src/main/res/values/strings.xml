@@ -3,10 +3,12 @@
 
     <string name="title">Título</string>
     <string name="title_hint">Introduce el título de la tarea</string>
+    <string name="title_edit_hint">Introduce el nuevo título de la tarea</string>
     <string name="done">Realizada</string>
     <string name="create">Crear Tarea</string>
     <string name="create2">CREAR</string>
-    <string name="instrucciones">Pulse sobre una tarea para marcarla como realizada o para volverla a pendiente.</string>
+    <string name="edit">EDITAR</string>
+    <string name="instrucciones">Pulse sobre una tarea para modificar su título.</string>
 
     <string name="realizada">REALIZADA</string>
     <string name="pendiente">PENDIENTE</string>
