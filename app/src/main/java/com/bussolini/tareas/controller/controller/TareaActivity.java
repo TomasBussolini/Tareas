@@ -1,4 +1,4 @@
-package com.bussolini.tareas.controller;
+package com.bussolini.tareas.controller.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,12 +21,18 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import static android.widget.CompoundButton.*;
 import com.bussolini.tareas.R;
+import com.bussolini.tareas.controller.api.APIClient;
+import com.bussolini.tareas.controller.api.ToDoAPI;
 import com.google.gson.Gson;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import model.Tarea;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TareaActivity extends AppCompatActivity {
 
@@ -46,6 +53,9 @@ public class TareaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tarea);
+
+        // NO PUDE SOLUCIONAR EL ERROR DE QUE PARA QUE SE MUESTREN POR PANTALLA LOS TODOS
+        // OBTENIDOS DE LA API DEBO CREAR PRIMERO UNA TAREA, LUEGO APARECEN. NO PUDE SOLUCIONARLO.
 
         crearTarea = (Button) findViewById(R.id.crear_tarea);
         crearTarea.setOnClickListener(new View.OnClickListener() {
@@ -76,15 +86,12 @@ public class TareaActivity extends AppCompatActivity {
     private void updateUI() {
 
         TareaLab tareaLab = TareaLab.get(this);
-        List<Tarea> tareas = tareaLab.getTareas();
 
         SharedPreferences pref = TareaActivity.this.getSharedPreferences("TAREAS", Context.MODE_PRIVATE);
-
         String tareasRecuperadas = pref.getString("TAREAS", "No hay tareas guardadas.");
+
         Tarea[] tareasGuardadas = new Gson().fromJson(tareasRecuperadas, Tarea[].class);
-
-        tareas = Arrays.asList(tareasGuardadas);
-
+        List<Tarea> tareas = Arrays.asList(tareasGuardadas);
         TareaLab.setTareas(tareas);
 
         adapter = new TareaAdapter(tareas);
@@ -151,6 +158,12 @@ public class TareaActivity extends AppCompatActivity {
                                 lista.get(i).setEstado("PENDIENTE");
 
                             TareaLab.setTareas(lista);
+
+                            SharedPreferences pref = TareaActivity.this.getSharedPreferences("TAREAS", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = pref.edit();
+                            String tareasJson = new Gson().toJson(lista);
+                            editor.putString("TAREAS", tareasJson);
+                            editor.apply();
 
                             break;
 
@@ -225,13 +238,10 @@ public class TareaActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(TAG, "onDestroy(Bundle) called");
 
-        TareaLab tareaLab = TareaLab.get(this);
-        List<Tarea> tareas = tareaLab.getTareas();
-
         SharedPreferences pref = TareaActivity.this.getSharedPreferences("TAREAS", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
-        String tareasJson = new Gson().toJson(tareas);
+        String tareasJson = new Gson().toJson(TareaLab.getTareas());
         editor.putString("TAREAS", tareasJson);
         editor.apply();
     }

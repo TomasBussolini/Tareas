@@ -1,5 +1,7 @@
 package model;
 
+import com.bussolini.tareas.controller.api.ToDoAPI;
+
 import java.util.UUID;
 
 public class Tarea {
@@ -11,6 +13,12 @@ public class Tarea {
     public Tarea() {
         this.id = UUID.randomUUID();
         this.estado = "PENDIENTE";
+    }
+
+    public Tarea(ToDoAPI todoAPI){
+        this.id = UUID.randomUUID();
+        this.titulo = todoAPI.getTitle();
+        this.estado = todoAPI.isCompleted();
     }
 
     public UUID getId() {
